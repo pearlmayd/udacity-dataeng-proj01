@@ -7,6 +7,10 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """
+    This function processes a song file to which the song information is stored into the songs table and artist information 
+    into the artists table. The filepath of the song file has been provided as an argument
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -20,6 +24,9 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """
+    This function processes a log file and loads the information to time, users, and songplays tables.
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -62,6 +69,9 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """
+    Processes all the files in the given directory using the appropriate function
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -81,6 +91,10 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    """
+    Connects to the sparkifydb database and calls the process_data function to process all the files and loads the information
+    into the database. This is the main function of the ETL pipeline.
+    """
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
